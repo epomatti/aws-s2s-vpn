@@ -5,8 +5,8 @@ az vm image terms accept --urn bitnami:rabbitmq:rabbitmq:latest
 
 ssh-keygen -f azure/keys/pfsense
 
-Username: `admin`
-Password: `pfsense`
+- Username: `admin`
+- Password: `pfsense`
 
 ###
 

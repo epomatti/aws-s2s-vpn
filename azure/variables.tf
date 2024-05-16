@@ -4,6 +4,10 @@ variable "location" {
 }
 
 ### Virtual Machine ###
+variable "enable_virtual_machine" {
+  type = bool
+}
+
 variable "vm_linux_size" {
   type = string
 }
