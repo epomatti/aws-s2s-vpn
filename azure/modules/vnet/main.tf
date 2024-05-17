@@ -1,6 +1,10 @@
+locals {
+  cidr_prefix = "10.3"
+}
+
 resource "azurerm_virtual_network" "default" {
   name                = "vnet-${var.workload}"
-  address_space       = ["10.0.0.0/16"]
+  address_space       = ["${local.cidr_prefix}.0.0/16"]
   location            = var.location
   resource_group_name = var.resource_group_name
 }
@@ -9,14 +13,14 @@ resource "azurerm_subnet" "firewall" {
   name                 = "firewall"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.0.0/24"]
+  address_prefixes     = ["${local.cidr_prefix}.0.0/24"]
 }
 
 resource "azurerm_subnet" "compute" {
   name                 = "compute"
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.default.name
-  address_prefixes     = ["10.0.10.0/24"]
+  address_prefixes     = ["${local.cidr_prefix}.10.0/24"]
 }
 
 ### Network Security Group - Firewall###

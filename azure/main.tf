@@ -7,13 +7,20 @@ terraform {
   }
 }
 
+resource "random_string" "generated" {
+  length  = 5
+  special = false
+  upper   = false
+}
+
 locals {
-  workload = "client"
-  firewall = "pfsense"
+  affix    = random_string.generated.result
+  workload = "enterprise"
+  firewall = "pfsense-${local.affix}"
 }
 
 resource "azurerm_resource_group" "default" {
-  name     = "rg-${local.workload}"
+  name     = "rg-${local.workload}-core-${local.affix}"
   location = var.location
 }
 

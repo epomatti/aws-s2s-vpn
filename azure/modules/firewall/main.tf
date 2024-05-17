@@ -49,7 +49,7 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 
   os_disk {
-    name                 = "osdisk-linux-${var.firewall_name}"
+    name                 = "osdisk-${var.firewall_name}"
     caching              = "ReadOnly"
     storage_account_type = "StandardSSD_LRS"
   }
