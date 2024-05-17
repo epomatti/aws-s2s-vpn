@@ -62,8 +62,8 @@ resource "azurerm_linux_virtual_machine" "default" {
   }
 
   plan {
-    name      = "pfsense-plus-public-tac-lite"
-    publisher = "netgate"
-    product   = "pfsense-plus-public-cloud-fw-vpn-router"
+    name      = var.plan_name
+    publisher = var.plan_publisher
+    product   = var.plan_product
   }
 }

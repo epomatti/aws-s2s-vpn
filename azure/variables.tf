@@ -21,22 +21,38 @@ variable "enable_firewall" {
   type = bool
 }
 
-variable "pfsense_vm_size" {
+variable "firewall_name" {
   type = string
 }
 
-variable "pfsense_publisher" {
+variable "firewall_vm_size" {
   type = string
 }
 
-variable "pfsense_offer" {
+variable "firewall_image_publisher" {
   type = string
 }
 
-variable "pfsense_sku" {
+variable "firewall_image_offer" {
   type = string
 }
 
-variable "pfsense_version" {
+variable "firewall_image_sku" {
+  type = string
+}
+
+variable "firewall_image_version" {
+  type = string
+}
+
+variable "firewall_plan_name" {
+  type = string
+}
+
+variable "firewall_plan_publisher" {
+  type = string
+}
+
+variable "firewall_plan_product" {
   type = string
 }

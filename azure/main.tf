@@ -50,13 +50,16 @@ module "vm_linux" {
 module "firewall" {
   count               = var.enable_firewall ? 1 : 0
   source              = "./modules/firewall"
-  firewall_name       = "pfsense"
+  firewall_name       = var.firewall_name
   resource_group_name = azurerm_resource_group.firewall.name
   location            = azurerm_resource_group.default.location
   subnet_id           = module.vnet.firewall_subnet_id
-  size                = var.pfsense_vm_size
-  image_publisher     = var.pfsense_publisher
-  image_offer         = var.pfsense_offer
-  image_sku           = var.pfsense_sku
-  image_version       = var.pfsense_version
+  size                = var.firewall_vm_size
+  image_publisher     = var.firewall_image_publisher
+  image_offer         = var.firewall_image_offer
+  image_sku           = var.firewall_image_sku
+  image_version       = var.firewall_image_version
+  plan_name           = var.firewall_plan_name
+  plan_publisher      = var.firewall_plan_publisher
+  plan_product        = var.firewall_plan_product
 }

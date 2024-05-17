@@ -34,3 +34,15 @@ variable "image_sku" {
 variable "image_version" {
   type = string
 }
+
+variable "plan_name" {
+  type = string
+}
+
+variable "plan_publisher" {
+  type = string
+}
+
+variable "plan_product" {
+  type = string
+}

@@ -2,13 +2,20 @@
 location = "eastus2"
 
 ### Virtual Machine ###
-vm_linux_size      = "Standard_B2ps_v2"
-vm_linux_image_sku = "22_04-lts-arm64"
+enable_virtual_machine = false
+vm_linux_size          = "Standard_B2ps_v2"
+vm_linux_image_sku     = "22_04-lts-arm64"
 
 ### Firewall ###
-enable_firewall   = true
-pfsense_vm_size   = "Standard_B2as_v2"
-pfsense_publisher = "netgate"
-pfsense_offer     = "pfsense-plus-public-cloud-fw-vpn-router"
-pfsense_sku       = "pfsense-plus-public-tac-lite"
-pfsense_version   = "latest"
+enable_firewall  = true
+firewall_name    = "pfsense"
+firewall_vm_size = "Standard_B2as_v2"
+
+firewall_image_publisher = "netgate"
+firewall_image_offer     = "pfsense-plus-public-cloud-fw-vpn-router"
+firewall_image_sku       = "pfsense-plus-public-tac-lite"
+firewall_image_version   = "latest"
+
+firewall_plan_name      = "pfsense-plus-public-tac-lite"
+firewall_plan_publisher = "netgate"
+firewall_plan_product   = "pfsense-plus-public-cloud-fw-vpn-router"
