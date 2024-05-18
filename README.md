@@ -90,8 +90,8 @@ While in the AWS VPN section, get the `Outside IP address` for the IPSec tunnels
 Go back to the Azure configuration, and set the IP addresses for each tunnel:
 
 ```terraform
-aws_remote_gateway_ip_address_tunnel_1 = "1.2.3.4"
-aws_remote_gateway_ip_address_tunnel_2 = "1.2.3.4"
+aws_remote_gateway_ip_address_tunnel_1 = "5.6.7.8"
+aws_remote_gateway_ip_address_tunnel_2 = "4.3.2.1"
 ```
 
 Re-apply the configuration:
