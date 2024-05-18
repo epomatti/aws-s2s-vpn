@@ -31,8 +31,8 @@ chmod 600 azure/keys/temp_key
 Init and apply the Terraform configuration:
 
 ```sh
-terraform init
-terraform apply -auto-approve
+terraform -chdir="azure" init
+terraform -chdir="azure" apply -auto-approve
 ```
 
 Connect with SSH and check VM startup script:
@@ -66,8 +66,8 @@ customer_gateway_ip_address = "1.2.3.4"
 Init and apply the Terraform configuration:
 
 ```sh
-terraform init
-terraform apply -auto-approve
+terraform -chdir="aws" init
+terraform -chdir="aws" apply -auto-approve
 ```
 
 In the VPC console, open the VPN Connection and download the configuration:
@@ -97,7 +97,7 @@ aws_remote_gateway_ip_address_tunnel_2 = "1.2.3.4"
 Re-apply the configuration:
 
 ```sh
-terraform apply -auto-approve
+terraform -chdir="azure" apply -auto-approve
 ```
 
 ### 4. Configure pfSense IPSec
@@ -118,15 +118,27 @@ Add the firewall to allow traffic within the tunnels:
 
 ## Let's Encrypt certificates
 
+To protect pfSense with TLS, here's some guidelines to do that with Let's Encrypt.
+
+Considering usage with WSL:
+
+```
 sudo -e /etc/wsl.conf
+```
 
-wsl --shutdown
-
+Add 
 
 ```toml
 [boot]
 systemd=true
 ```
+Restart
+
+```
+wsl --shutdown
+
+
+
 
 https://certbot.eff.org/instructions?ws=other&os=ubuntufocal
 https://snapcraft.io/install/certbot/ubuntu
@@ -190,12 +202,15 @@ https://www.youtube.com/watch?v=nz__4KBKIGE
 https://c86.medium.com/setup-site-to-site-vpn-to-aws-with-pfsense-1cac16623bd6
 https://youtu.be/15amNny_kKI
 
-###
+## Finding Azure images
 
+Command used to find the pfSense marketplace image:
 
 ```sh
 az vm image list --location eastus2 --publisher netgate --offer pfsense-plus-public-cloud-fw-vpn-router --sku pfsense-plus-public-tac-lite --all
 ```
+
+Additional search commands:
 
 ```sh
 az vm image list-publishers --location eastus2 --query [].name --output table | grep netgate
