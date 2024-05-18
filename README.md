@@ -115,6 +115,12 @@ Add the firewall to allow traffic within the tunnels:
 - IPSec
 - WAN
 
+### 5. Testing
+
+At this point, everything should be working and traffic flowing from both sides.
+
+Run `ping` commands and calling NGINX from each side for testing.
+
 ## Let's Encrypt certificates
 
 To protect pfSense with TLS, here's some guidelines to do that with Let's Encrypt.
