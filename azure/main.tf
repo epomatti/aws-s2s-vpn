@@ -81,4 +81,5 @@ module "route" {
   aws_route_cidr              = var.aws_route_cidr
   firewall_private_ip_address = module.firewall[0].private_ip_address
   compute_subnet_id           = module.vnet.compute_subnet_id
+  firewall_subnet_id          = module.vnet.firewall_subnet_id
 }

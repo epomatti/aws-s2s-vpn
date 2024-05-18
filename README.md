@@ -1,6 +1,19 @@
-# Azure <> AWS: Site-to-site VPN 
+# AWS Site-to-Site VPN
+
+VPN connection between AWS VPN adn Network pfSense (running on Azure).
+
+## Setup
+
+### Azure (step 1)
 
 
+Create a key pair to use for the VM configuration:
+
+```sh
+mkdir azure/keys
+ssh-keygen -f azure/keys/temp_key
+chmod 600 azure/keys/temp_key
+```
 
 
 ssh-keygen -f azure/keys/pfsense
@@ -8,14 +21,23 @@ ssh-keygen -f azure/keys/pfsense
 - Username: `admin`
 - Password: `pfsense`
 
-
-## 
-
 ```sh
-mkdir azure/keys
-ssh-keygen -f azure/keys/temp_key
-chmod 600 azure/keys/temp_key
+cloud-init status
 ```
+
+
+### AWS (step 1)
+
+
+Download configuration: Generic, ikev2
+
+### Azure (step 2)
+
+### Azure (step 2)
+
+### pfSense
+
+Add firewall rules.
 
 
 
@@ -110,3 +132,6 @@ az vm image list-offers --location eastus2 --publisher netgate --output table
 az vm image list-skus --location eastus2 --publisher netgate --offer pfsense-plus-public-cloud-fw-vpn-router --query [].name --output table
 ```
 
+## Reference
+
+https://youtu.be/p83RmeT2Q-A

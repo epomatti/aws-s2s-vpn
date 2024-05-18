@@ -18,3 +18,8 @@ resource "azurerm_subnet_route_table_association" "compute" {
   subnet_id      = var.compute_subnet_id
   route_table_id = azurerm_route_table.aws.id
 }
+
+resource "azurerm_subnet_route_table_association" "firewall" {
+  subnet_id      = var.firewall_subnet_id
+  route_table_id = azurerm_route_table.aws.id
+}

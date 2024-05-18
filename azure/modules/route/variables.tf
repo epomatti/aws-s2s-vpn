@@ -17,3 +17,7 @@ variable "firewall_private_ip_address" {
 variable "compute_subnet_id" {
   type = string
 }
+
+variable "firewall_subnet_id" {
+  type = string
+}
