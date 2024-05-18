@@ -18,7 +18,6 @@ locals {
   availability_zone_2 = "${var.aws_region}b"
 }
 
-### VPC ###
 module "vpc" {
   source              = "./modules/vpc"
   region              = var.aws_region
@@ -34,4 +33,19 @@ module "private_instance" {
   subnet        = module.vpc.private_subnet_id
   ami           = var.ami
   instance_type = var.instance_type
+}
+
+module "acm" {
+  count             = var.enable_acmpca ? 1 : 0
+  source            = "./modules/acm"
+  acmca_common_name = var.acmpca_common_name
+}
+
+module "vpn" {
+  count                            = var.enable_vpn ? 1 : 0
+  source                           = "./modules/vpn"
+  vpc_id                           = module.vpc.vpc_id
+  customer_gateway_ip_address      = var.customer_gateway_ip_address
+  customer_gateway_cidr            = var.customer_gateway_cidr
+  customer_gateway_certificate_arn = var.enable_acmpca ? module.acm[0].customer_gateway_certificate_arn : null
 }
