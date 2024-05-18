@@ -32,13 +32,8 @@ resource "azurerm_linux_virtual_machine" "default" {
   location              = var.location
   size                  = var.size
   admin_username        = local.username
-  admin_password        = "P@ssw0rd.123"
   network_interface_ids = [azurerm_network_interface.default.id]
   user_data             = filebase64("${path.module}/userdata/ubuntu.sh")
-
-  identity {
-    type = "SystemAssigned"
-  }
 
   admin_ssh_key {
     username   = local.username

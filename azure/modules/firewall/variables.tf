@@ -46,3 +46,7 @@ variable "plan_publisher" {
 variable "plan_product" {
   type = string
 }
+
+variable "public_key" {
+  type = string
+}

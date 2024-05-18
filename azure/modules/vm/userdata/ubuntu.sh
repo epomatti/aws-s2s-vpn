@@ -2,8 +2,5 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt update && apt upgrade -y
+apt update
 apt install -y traceroute nginx
-
-
-reboot

@@ -42,13 +42,9 @@ resource "azurerm_linux_virtual_machine" "default" {
   admin_username        = local.admin_username
   network_interface_ids = [azurerm_network_interface.default.id]
 
-  identity {
-    type = "SystemAssigned"
-  }
-
   admin_ssh_key {
     username   = local.admin_username
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = var.public_key
   }
 
   os_disk {

@@ -71,6 +71,7 @@ module "firewall" {
   plan_name           = var.firewall_plan_name
   plan_publisher      = var.firewall_plan_publisher
   plan_product        = var.firewall_plan_product
+  public_key          = local.public_key
 }
 
 module "route" {
