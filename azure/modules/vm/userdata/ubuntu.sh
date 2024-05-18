@@ -3,7 +3,7 @@
 export DEBIAN_FRONTEND=noninteractive
 
 apt update && apt upgrade -y
-apt install -y traceroute
+apt install -y traceroute nginx
 
 
 reboot

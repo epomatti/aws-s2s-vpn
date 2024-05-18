@@ -57,4 +57,10 @@ resource "azurerm_linux_virtual_machine" "default" {
     sku       = var.image_sku
     version   = "latest"
   }
+
+  lifecycle {
+    ignore_changes = [
+      user_data
+    ]
+  }
 }
