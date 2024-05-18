@@ -2,6 +2,8 @@
 
 VPN connection between AWS VPN adn Network pfSense (running on Azure).
 
+<img src=".assets/aws-pfsense.png" />
+
 ## Setup
 
 ### Azure (step 1)
