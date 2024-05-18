@@ -6,7 +6,7 @@ variable "location" {
   type = string
 }
 
-variable "aws_route_cidr" {
+variable "aws_vpc_cidr" {
   type = string
 }
 

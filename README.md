@@ -1,6 +1,6 @@
 # AWS Site-to-Site VPN
 
-VPN connection between AWS VPN adn Network pfSense (running on Azure).
+IPSec connection between AWS VPN and Netgate pfSense from the Azure Marketplace.
 
 <img src=".assets/aws-pfsense.png" />
 
@@ -8,8 +8,19 @@ VPN connection between AWS VPN adn Network pfSense (running on Azure).
 
 ### Azure (step 1)
 
+Copy the `.auto.tfvars` template:
 
-Create a key pair to use for the VM configuration:
+```sh
+cp azure/config/template.tfvars azure/.auto.tfvars
+```
+
+Set your IP CIDR address for management of the Azure resources:
+
+```terraform
+local_administrator_cidr = "1.2.3.4./32"
+```
+
+Create a key pair to use for the Virtual Machines configuration:
 
 ```sh
 mkdir azure/keys
@@ -17,8 +28,14 @@ ssh-keygen -f azure/keys/temp_key
 chmod 600 azure/keys/temp_key
 ```
 
+Init and apply the Terraform configuration:
 
-ssh-keygen -f azure/keys/pfsense
+```sh
+terraform init
+terraform apply -auto-approve
+```
+
+
 
 - Username: `admin`
 - Password: `pfsense`

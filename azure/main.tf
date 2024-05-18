@@ -31,10 +31,13 @@ resource "azurerm_resource_group" "firewall" {
 }
 
 module "vnet" {
-  source              = "./modules/vnet"
-  workload            = local.workload
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
+  source                                 = "./modules/vnet"
+  workload                               = local.workload
+  resource_group_name                    = azurerm_resource_group.default.name
+  location                               = azurerm_resource_group.default.location
+  aws_remote_gateway_ip_address_tunnel_1 = var.aws_remote_gateway_ip_address_tunnel_1
+  aws_remote_gateway_ip_address_tunnel_2 = var.aws_remote_gateway_ip_address_tunnel_2
+  local_administrator_ip_address         = var.local_administrator_ip_address
 }
 
 module "vm_linux" {
@@ -71,7 +74,7 @@ module "route" {
   source                      = "./modules/route"
   resource_group_name         = azurerm_resource_group.default.name
   location                    = azurerm_resource_group.default.location
-  aws_route_cidr              = var.aws_route_cidr
+  aws_vpc_cidr                = var.aws_vpc_cidr
   firewall_private_ip_address = module.firewall[0].private_ip_address
   compute_subnet_id           = module.vnet.compute_subnet_id
   firewall_subnet_id          = module.vnet.firewall_subnet_id

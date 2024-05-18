@@ -9,3 +9,15 @@ variable "resource_group_name" {
 variable "location" {
   type = string
 }
+
+variable "aws_remote_gateway_ip_address_tunnel_1" {
+  type = string
+}
+
+variable "aws_remote_gateway_ip_address_tunnel_2" {
+  type = string
+}
+
+variable "local_administrator_ip_address" {
+  type = string
+}

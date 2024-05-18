@@ -9,7 +9,7 @@ resource "azurerm_route" "aws" {
   name                   = "aws-route"
   resource_group_name    = var.resource_group_name
   route_table_name       = azurerm_route_table.aws.name
-  address_prefix         = var.aws_route_cidr
+  address_prefix         = var.aws_vpc_cidr
   next_hop_type          = "VirtualAppliance"
   next_hop_in_ip_address = var.firewall_private_ip_address
 }

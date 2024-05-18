@@ -2,7 +2,10 @@
 location = "eastus2"
 
 ### VNET ###
-aws_route_cidr = "10.0.0.0/16"
+aws_vpc_cidr                           = "10.0.0.0/16"
+aws_remote_gateway_ip_address_tunnel_1 = ""
+aws_remote_gateway_ip_address_tunnel_2 = ""
+local_administrator_ip_address         = ""
 
 ### Virtual Machine ###
 enable_virtual_machine = true
