@@ -138,15 +138,29 @@ resource "azurerm_subnet_network_security_group_association" "application" {
   network_security_group_id = azurerm_network_security_group.application.id
 }
 
-resource "azurerm_network_security_rule" "allow_inbound_ssh_application" {
+resource "azurerm_network_security_rule" "allow_admin_compute" {
   name                        = "SSH"
+  priority                    = 1000
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_range      = "22"
+  source_address_prefix       = var.local_administrator_ip_address
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.application.name
+}
+
+resource "azurerm_network_security_rule" "allow_http" {
+  name                        = "HTTP"
   priority                    = 1010
   direction                   = "Inbound"
   access                      = "Allow"
-  protocol                    = "*"
+  protocol                    = "Tcp"
   source_port_range           = "*"
-  destination_port_range      = "22"
-  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+  destination_port_ranges     = [80, 443]
+  source_address_prefixes     = [var.aws_vpc_cidr, var.local_administrator_ip_address]
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.application.name
@@ -157,11 +171,39 @@ resource "azurerm_network_security_rule" "icmp" {
   priority                    = 1020
   direction                   = "Inbound"
   access                      = "Allow"
-  protocol                    = "*"
+  protocol                    = "Icmp"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+  source_address_prefixes     = [var.aws_vpc_cidr, var.local_administrator_ip_address]
   destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.application.name
+}
+
+resource "azurerm_network_security_rule" "outbound_aws_http" {
+  name                        = "OutboundToAWSHTTP"
+  priority                    = 1000
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "Tcp"
+  source_port_range           = "*"
+  destination_port_ranges     = [80, 443]
+  source_address_prefix       = "*"
+  destination_address_prefix  = var.aws_vpc_cidr
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.application.name
+}
+
+resource "azurerm_network_security_rule" "outbound_aws_icmp" {
+  name                        = "OutboundToAWSICMP"
+  priority                    = 1010
+  direction                   = "Outbound"
+  access                      = "Allow"
+  protocol                    = "Icmp"
+  source_port_range           = "*"
+  destination_port_range      = "*"
+  source_address_prefix       = "*"
+  destination_address_prefix  = var.aws_vpc_cidr
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.application.name
 }

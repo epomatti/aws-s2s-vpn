@@ -10,6 +10,10 @@ variable "location" {
   type = string
 }
 
+variable "aws_vpc_cidr" {
+  type = string
+}
+
 variable "aws_remote_gateway_ip_address_tunnel_1" {
   type = string
 }
