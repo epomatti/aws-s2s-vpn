@@ -199,4 +199,3 @@ terraform -chdir="aws" destroy -auto-approve
 
 
 [1]: https://certbot.eff.org/
-[2]: 
