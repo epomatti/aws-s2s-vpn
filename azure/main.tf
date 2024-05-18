@@ -14,9 +14,10 @@ resource "random_string" "generated" {
 }
 
 locals {
-  affix    = random_string.generated.result
-  workload = "enterprise"
-  firewall = "pfsense-${local.affix}"
+  affix      = random_string.generated.result
+  workload   = "enterprise"
+  firewall   = "pfsense-${local.affix}"
+  public_key = file("keys/temp_key.pub")
 }
 
 resource "azurerm_resource_group" "default" {
@@ -52,6 +53,7 @@ module "vm_linux" {
   subnet_id           = module.vnet.compute_subnet_id
   size                = var.vm_linux_size
   image_sku           = var.vm_linux_image_sku
+  public_key          = local.public_key
 }
 
 module "firewall" {
@@ -69,4 +71,13 @@ module "firewall" {
   plan_name           = var.firewall_plan_name
   plan_publisher      = var.firewall_plan_publisher
   plan_product        = var.firewall_plan_product
+}
+
+module "route" {
+  source                      = "./modules/route"
+  resource_group_name         = azurerm_resource_group.default.name
+  location                    = azurerm_resource_group.default.location
+  aws_route_cidr              = var.aws_route_cidr
+  firewall_private_ip_address = module.firewall[0].private_ip_address
+  compute_subnet_id           = module.vnet.compute_subnet_id
 }

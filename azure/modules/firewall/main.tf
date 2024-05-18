@@ -15,6 +15,9 @@ resource "azurerm_network_interface" "default" {
   # Based on the source ARM template
   enable_accelerated_networking = true
 
+  # Required for routing
+  enable_ip_forwarding = true
+
   ip_configuration {
     name                          = "ipconfig1"
     subnet_id                     = var.subnet_id

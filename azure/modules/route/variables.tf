@@ -6,22 +6,14 @@ variable "location" {
   type = string
 }
 
-variable "workload" {
+variable "aws_route_cidr" {
   type = string
 }
 
-variable "subnet_id" {
+variable "firewall_private_ip_address" {
   type = string
 }
 
-variable "size" {
-  type = string
-}
-
-variable "image_sku" {
-  type = string
-}
-
-variable "public_key" {
+variable "compute_subnet_id" {
   type = string
 }

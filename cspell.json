@@ -4,6 +4,9 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "certbot",
+        "certonly",
+        "letsencrypt",
         "netgate",
         "pfsense",
         "skus"

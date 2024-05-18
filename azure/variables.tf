@@ -3,6 +3,11 @@ variable "location" {
   type = string
 }
 
+### VNET ###
+variable "aws_route_cidr" {
+  type = string
+}
+
 ### Virtual Machine ###
 variable "enable_virtual_machine" {
   type = bool

@@ -23,6 +23,23 @@ resource "azurerm_subnet" "compute" {
   address_prefixes     = ["${local.cidr_prefix}.10.0/24"]
 }
 
+### Routes ###
+# resource "azurerm_route_table" "aws" {
+#   name                          = "aws-route-table"
+#   location                      = var.location
+#   resource_group_name           = var.resource_group_name
+#   disable_bgp_route_propagation = false
+# }
+
+# resource "azurerm_route" "aws" {
+#   name                = "aws-route"
+#   resource_group_name = var.resource_group_name
+#   route_table_name    = azurerm_route_table.aws.name
+#   address_prefix      = var.aws_route_cidr
+#   next_hop_type       = "VirtualAppliance"
+#   next_hop_in_ip_address = 
+# }
+
 ### Network Security Group - Firewall###
 resource "azurerm_network_security_group" "firewall" {
   name                = "nsg-firewall"
@@ -35,47 +52,103 @@ resource "azurerm_subnet_network_security_group_association" "firewall" {
   network_security_group_id = azurerm_network_security_group.firewall.id
 }
 
-resource "azurerm_network_security_rule" "allow_inbound_ssh_firewall" {
-  name                        = "SSH"
+resource "azurerm_network_security_rule" "all_inbound" {
+  name                        = "All"
   priority                    = 1010
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"
   source_port_range           = "*"
-  destination_port_range      = "22"
+  destination_port_range      = "*"
   source_address_prefix       = "*" # TODO: Close this down to a specific IP range
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.firewall.name
 }
 
-resource "azurerm_network_security_rule" "allow_inbound_ssh_https" {
-  name                        = "HTTPS"
-  priority                    = 1020
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "443"
-  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.firewall.name
-}
+# resource "azurerm_network_security_rule" "ipsec" {
+#   name                        = "IPSec"
+#   priority                    = 2000
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "UDP"
+#   source_port_range           = "*"
+#   destination_port_range      = "500"
+#   source_address_prefix       = "*"
+#   destination_address_prefix  = "*"
+#   resource_group_name         = var.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.firewall.name
+# }
 
-resource "azurerm_network_security_rule" "allow_inbound_ssh_http" {
-  name                        = "HTTP"
-  priority                    = 1030
-  direction                   = "Inbound"
-  access                      = "Allow"
-  protocol                    = "*"
-  source_port_range           = "*"
-  destination_port_range      = "80"
-  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
-  destination_address_prefix  = "*"
-  resource_group_name         = var.resource_group_name
-  network_security_group_name = azurerm_network_security_group.firewall.name
-}
+# resource "azurerm_network_security_rule" "natt" {
+#   name                        = "NAT-T"
+#   priority                    = 2010
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "UDP"
+#   source_port_range           = "*"
+#   destination_port_range      = "4500"
+#   source_address_prefix       = "*"
+#   destination_address_prefix  = "*"
+#   resource_group_name         = var.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.firewall.name
+# }
+
+# resource "azurerm_network_security_rule" "openvpn" {
+#   name                        = "OpenVPN"
+#   priority                    = 2020
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "UDP"
+#   source_port_range           = "*"
+#   destination_port_range      = "1194"
+#   source_address_prefix       = "*"
+#   destination_address_prefix  = "*"
+#   resource_group_name         = var.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.firewall.name
+# }
+
+# resource "azurerm_network_security_rule" "allow_inbound_ssh_firewall" {
+#   name                        = "SSH"
+#   priority                    = 1010
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "*"
+#   source_port_range           = "*"
+#   destination_port_range      = "22"
+#   source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+#   destination_address_prefix  = "*"
+#   resource_group_name         = var.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.firewall.name
+# }
+
+# resource "azurerm_network_security_rule" "allow_inbound_ssh_https" {
+#   name                        = "HTTPS"
+#   priority                    = 1020
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "*"
+#   source_port_range           = "*"
+#   destination_port_range      = "443" # 443
+#   source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+#   destination_address_prefix  = "*"
+#   resource_group_name         = var.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.firewall.name
+# }
+
+# resource "azurerm_network_security_rule" "allow_inbound_ssh_http" {
+#   name                        = "HTTP"
+#   priority                    = 1030
+#   direction                   = "Inbound"
+#   access                      = "Allow"
+#   protocol                    = "*"
+#   source_port_range           = "*"
+#   destination_port_range      = "80"
+#   source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+#   destination_address_prefix  = "*"
+#   resource_group_name         = var.resource_group_name
+#   network_security_group_name = azurerm_network_security_group.firewall.name
+# }
 
 ### Network Security Group - Application ###
 resource "azurerm_network_security_group" "application" {
@@ -97,6 +170,20 @@ resource "azurerm_network_security_rule" "allow_inbound_ssh_application" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "22"
+  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+  destination_address_prefix  = "*"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.application.name
+}
+
+resource "azurerm_network_security_rule" "icmp" {
+  name                        = "ICMP"
+  priority                    = 1020
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  destination_port_range      = "*"
   source_address_prefix       = "*" # TODO: Close this down to a specific IP range
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name

@@ -23,7 +23,7 @@ resource "azurerm_network_interface" "default" {
 }
 
 locals {
-  username = "sysadmin"
+  username = "azureuser"
 }
 
 resource "azurerm_linux_virtual_machine" "default" {
@@ -42,7 +42,7 @@ resource "azurerm_linux_virtual_machine" "default" {
 
   admin_ssh_key {
     username   = local.username
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = var.public_key
   }
 
   os_disk {
