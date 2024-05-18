@@ -27,12 +27,13 @@ module "vpc" {
 }
 
 module "private_instance" {
-  count         = var.enable_private_instance ? 1 : 0
-  source        = "./modules/instance"
-  vpc_id        = module.vpc.vpc_id
-  subnet        = module.vpc.private_subnet_id
-  ami           = var.ami
-  instance_type = var.instance_type
+  count                 = var.enable_private_instance ? 1 : 0
+  source                = "./modules/instance"
+  vpc_id                = module.vpc.vpc_id
+  subnet                = module.vpc.private_subnet_id
+  ami                   = var.ami
+  instance_type         = var.instance_type
+  customer_gateway_cidr = var.customer_gateway_cidr
 }
 
 module "acm" {
@@ -48,4 +49,5 @@ module "vpn" {
   customer_gateway_ip_address      = var.customer_gateway_ip_address
   customer_gateway_cidr            = var.customer_gateway_cidr
   customer_gateway_certificate_arn = var.enable_acmpca ? module.acm[0].customer_gateway_certificate_arn : null
+  route_tables_ids                 = module.vpc.route_tables_ids
 }

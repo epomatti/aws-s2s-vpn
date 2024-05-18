@@ -13,3 +13,7 @@ variable "ami" {
 variable "instance_type" {
   type = string
 }
+
+variable "customer_gateway_cidr" {
+  type = string
+}

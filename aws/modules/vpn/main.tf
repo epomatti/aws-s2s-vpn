@@ -42,7 +42,8 @@ resource "aws_vpn_connection_route" "azure" {
 #   vpn_connection_id      = aws_vpn_connection.main.id
 # }
 
-# resource "aws_vpn_gateway_route_propagation" "main" {
-#   vpn_gateway_id = aws_vpn_gateway.example.id
-#   route_table_id = aws_route_table.example.id
-# }
+resource "aws_vpn_gateway_route_propagation" "main" {
+  for_each       = toset(var.route_tables_ids)
+  vpn_gateway_id = aws_vpn_gateway.vpn_gateway.id
+  route_table_id = each.value
+}

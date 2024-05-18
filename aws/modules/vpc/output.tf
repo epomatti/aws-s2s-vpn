@@ -21,3 +21,7 @@ output "cidr_block" {
 output "private_route_table_id" {
   value = aws_route_table.private.id
 }
+
+output "route_tables_ids" {
+  value = [aws_route_table.public1.id, aws_route_table.private.id]
+}

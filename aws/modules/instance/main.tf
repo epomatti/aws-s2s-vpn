@@ -86,7 +86,7 @@ resource "aws_security_group_rule" "icmp_egress" {
   from_port         = -1
   to_port           = -1
   protocol          = "icmp"
-  cidr_blocks       = [data.aws_vpc.selected.cidr_block]
+  cidr_blocks       = [data.aws_vpc.selected.cidr_block, var.customer_gateway_cidr]
   security_group_id = aws_security_group.main.id
 }
 
@@ -95,7 +95,7 @@ resource "aws_security_group_rule" "icmp_ingress" {
   from_port         = -1
   to_port           = -1
   protocol          = "icmp"
-  cidr_blocks       = [data.aws_vpc.selected.cidr_block]
+  cidr_blocks       = [data.aws_vpc.selected.cidr_block, var.customer_gateway_cidr]
   security_group_id = aws_security_group.main.id
 }
 

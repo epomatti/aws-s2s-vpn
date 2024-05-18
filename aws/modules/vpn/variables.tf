@@ -13,3 +13,7 @@ variable "customer_gateway_cidr" {
 variable "customer_gateway_certificate_arn" {
   type = string
 }
+
+variable "route_tables_ids" {
+  type = list(string)
+}
