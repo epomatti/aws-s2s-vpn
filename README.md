@@ -19,6 +19,8 @@ chmod 600 azure/keys/temp_key
 
 
 
+https://docs.netgate.com/pfsense/en/latest/troubleshooting/ipsec-traffic.html
+
 
 
 ### WSL

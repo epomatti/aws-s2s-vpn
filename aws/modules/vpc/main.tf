@@ -1,5 +1,5 @@
 locals {
-  cidr_prefix = "10.5"
+  cidr_prefix = "10.0"
 }
 
 resource "aws_vpc" "main" {

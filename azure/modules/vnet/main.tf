@@ -1,5 +1,5 @@
 locals {
-  cidr_prefix = "10.3"
+  cidr_prefix = "172.16"
 }
 
 resource "azurerm_virtual_network" "default" {
@@ -22,23 +22,6 @@ resource "azurerm_subnet" "compute" {
   virtual_network_name = azurerm_virtual_network.default.name
   address_prefixes     = ["${local.cidr_prefix}.10.0/24"]
 }
-
-### Routes ###
-# resource "azurerm_route_table" "aws" {
-#   name                          = "aws-route-table"
-#   location                      = var.location
-#   resource_group_name           = var.resource_group_name
-#   disable_bgp_route_propagation = false
-# }
-
-# resource "azurerm_route" "aws" {
-#   name                = "aws-route"
-#   resource_group_name = var.resource_group_name
-#   route_table_name    = azurerm_route_table.aws.name
-#   address_prefix      = var.aws_route_cidr
-#   next_hop_type       = "VirtualAppliance"
-#   next_hop_in_ip_address = 
-# }
 
 ### Network Security Group - Firewall###
 resource "azurerm_network_security_group" "firewall" {

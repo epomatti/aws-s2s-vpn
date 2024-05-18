@@ -1,8 +1,11 @@
 ### General ###
 location = "eastus2"
 
+### VNET ###
+aws_route_cidr = "10.0.0.0/16"
+
 ### Virtual Machine ###
-enable_virtual_machine = false
+enable_virtual_machine = true
 vm_linux_size          = "Standard_B2pts_v2"
 vm_linux_image_sku     = "22_04-lts-arm64"
 
