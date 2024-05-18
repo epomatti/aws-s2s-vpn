@@ -115,92 +115,49 @@ Add the firewall to allow traffic within the tunnels:
 - IPSec
 - WAN
 
-
 ## Let's Encrypt certificates
 
 To protect pfSense with TLS, here's some guidelines to do that with Let's Encrypt.
 
+### Installation (WSL)
+
 Considering usage with WSL:
 
-```
+```sh
 sudo -e /etc/wsl.conf
 ```
 
-Add 
+Add the configuration for `systemd`:
 
 ```toml
 [boot]
 systemd=true
 ```
-Restart
 
-```
+Restart WSL:
+
+```sh
 wsl --shutdown
+```
 
+Follow the [instructions][1] to install **Certbot** into your box.
 
+### Issue certificates
 
-
-https://certbot.eff.org/instructions?ws=other&os=ubuntufocal
-https://snapcraft.io/install/certbot/ubuntu
-
+Issuing a certificate manually:
 
 ```sh
 sudo certbot certonly --manual --preferred-challenges dns \
-    -d vpn-azure.pomatti.io \
-    -m evandro@pomatti.io
+    -d <your domain> \
+    -m <your email>
 ```
 
-```sh
-sudo certbot certonly --manual --preferred-challenges dns \
-    -d vpn-aws.pomatti.io \
-    -m evandro@pomatti.io
-```
+Location where the certifications will be available:
 
 ```
 Certificate is saved at: /etc/letsencrypt/live/vpn-azure.example.com/fullchain.pem
 Key is saved at:         /etc/letsencrypt/live/vpn-azure.example.com/privkey.pem
 ```
-
-```
-Certificate is saved at: /etc/letsencrypt/live/vpn-azure.example.com/fullchain.pem
-Key is saved at:         /etc/letsencrypt/live/vpn-azure.example.com/privkey.pem
-```
-
- https://toolbox.googleapps.com/apps/dig/#TXT/_acme-challenge.vpn-azure.pomatti.io.
-
-## Setup pfSense
-
-https://eff-certbot.readthedocs.io/en/stable/using.html#manual
-
-
-vpn-azure.example.com
-vpn-aws.example.com
-
-
-A registry
-
-
-Set the name
-
-Set the domain
-
-### CA
-
-https://www.comparitech.com/blog/vpn-privacy/openvpn-server-pfsense/
-
-Create the internal CA
-Create the server internal certificate
-
-https://docs.netgate.com/pfsense/en/latest/recipes/openvpn-s2s-tls.html
-
-
-https://youtu.be/I61t7aoGC2Q
-
-
-https://www.youtube.com/watch?v=nz__4KBKIGE
-
-https://c86.medium.com/setup-site-to-site-vpn-to-aws-with-pfsense-1cac16623bd6
-https://youtu.be/15amNny_kKI
 
 ## Finding Azure images
 
@@ -218,6 +175,22 @@ az vm image list-offers --location eastus2 --publisher netgate --output table
 az vm image list-skus --location eastus2 --publisher netgate --offer pfsense-plus-public-cloud-fw-vpn-router --query [].name --output table
 ```
 
+## Clean-up
+
+Destroy both Azure and AWS resources:
+
+```sh
+terraform -chdir="azure" destroy -auto-approve
+terraform -chdir="aws" destroy -auto-approve
+```
+
 ## Reference
 
-https://youtu.be/p83RmeT2Q-A
+- [How to Setup Site to Site VPN between AWS and PFsense?](https://youtu.be/p83RmeT2Q-A)
+- [Setup Site-to-Site VPN to AWS with pfSense](https://c86.medium.com/setup-site-to-site-vpn-to-aws-with-pfsense-1cac16623bd6)
+- [IP Sec VPN Fundamentals](https://youtu.be/15amNny_kKI)
+- [How do I create a certificate-based VPN using AWS Site-to-Site VPN?](https://www.youtube.com/watch?v=nz__4KBKIGE)
+
+
+[1]: https://certbot.eff.org/
+[2]: 
