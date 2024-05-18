@@ -99,6 +99,15 @@ resource "aws_security_group_rule" "http" {
   security_group_id = aws_security_group.main.id
 }
 
+resource "aws_security_group_rule" "https" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = [data.aws_vpc.selected.cidr_block, var.customer_gateway_cidr]
+  security_group_id = aws_security_group.main.id
+}
+
 resource "aws_security_group_rule" "icmp_egress" {
   type              = "egress"
   from_port         = -1
