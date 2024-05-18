@@ -43,7 +43,7 @@ resource "azurerm_network_security_rule" "all_inbound" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+  source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.firewall.name
@@ -57,7 +57,7 @@ resource "azurerm_network_security_rule" "all_outbound" {
   protocol                    = "*"
   source_port_range           = "*"
   destination_port_range      = "*"
-  source_address_prefix       = "*" # TODO: Close this down to a specific IP range
+  source_address_prefix       = "*"
   destination_address_prefix  = "*"
   resource_group_name         = var.resource_group_name
   network_security_group_name = azurerm_network_security_group.firewall.name

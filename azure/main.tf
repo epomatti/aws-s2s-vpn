@@ -37,13 +37,6 @@ module "vnet" {
   location            = azurerm_resource_group.default.location
 }
 
-module "monitor" {
-  source              = "./modules/monitor"
-  workload            = local.workload
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
-}
-
 module "vm_linux" {
   count               = var.enable_virtual_machine ? 1 : 0
   source              = "./modules/vm"
