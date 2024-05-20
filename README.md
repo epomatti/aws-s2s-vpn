@@ -20,6 +20,9 @@ Set your IP CIDR address for management of the Azure resources:
 local_administrator_cidr = "1.2.3.4"
 ```
 
+> [!CAUTION]
+> Watch out for the `enable_acmpca`variable. AWS ACM Private Certificate Authority is an expensive service with monthly fees. Do **not** set it to `true` unless you intend to do so.
+
 Create a key pair to use for the Virtual Machines configuration:
 
 ```sh
