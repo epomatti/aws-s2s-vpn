@@ -31,7 +31,7 @@ ssh-keygen -f azure/keys/temp_key
 chmod 600 azure/keys/temp_key
 ```
 
-Init and apply the Terraform configuration:
+Apply and create the resources:
 
 ```sh
 terraform -chdir="azure" init
@@ -80,7 +80,7 @@ In the VPC console, open the VPN Connection and download the configuration:
 - Software: `Vendor Agnostic`
 - IKE version: `ikev2`
 
-Connect with SSM Session Manager and check the instance startup script:
+Connect using SSM Session Manager and check the instance startup script:
 
 ```sh
 cloud-init status
@@ -97,7 +97,7 @@ aws_remote_gateway_ip_address_tunnel_1 = "5.6.7.8"
 aws_remote_gateway_ip_address_tunnel_2 = "4.3.2.1"
 ```
 
-Re-apply the configuration:
+Reapply the configuration:
 
 ```sh
 terraform -chdir="azure" apply -auto-approve
@@ -113,7 +113,7 @@ Follow the steps detailed in the instructions downloaded from AWS for a Generic 
 
 #### Firewall rules
 
-Add the firewall to allow traffic within the tunnels:
+Add the firewall rules to allow traffic within the tunnels:
 
 - IPSec
 - WAN
@@ -126,7 +126,7 @@ Run `ping` commands and calling NGINX from each side for testing.
 
 ## Let's Encrypt certificates
 
-To protect pfSense with TLS, here's some guidelines to do that with Let's Encrypt.
+To protect pfSense with TLS, here're some guidelines to do that with Let's Encrypt.
 
 ### Installation (WSL)
 
